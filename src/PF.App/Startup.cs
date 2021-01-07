@@ -13,6 +13,8 @@ using PF.Data.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PF.Business.Interfaces;
+using PF.Data.Repository;
 
 namespace PF.App
 {
@@ -37,6 +39,11 @@ namespace PF.App
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<AppDbContext>();
+            services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

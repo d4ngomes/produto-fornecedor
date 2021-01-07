@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PF.Business.Models
@@ -6,6 +7,8 @@ namespace PF.Business.Models
     public class Endereco
     {
         public Guid Id { get; set; }
+
+        [HiddenInput]
         public Guid FornecedorId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
