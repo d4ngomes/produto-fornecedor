@@ -1,10 +1,10 @@
 ﻿@model PF.Business.Models.Fornecedor
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>Fornecedor</h4>
 <hr />
@@ -24,8 +24,9 @@
                 <span asp-validation-for="Documento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoFornecedor" class="control-label"></label>
-                <select asp-for="TipoFornecedor" class="form-control"></select>
+                <label asp-for="TipoFornecedor" class="control-label"></label><br />
+                <input type="radio" value="1" asp-for="TipoFornecedor" checked />Pessoa Física<br />
+                <input type="radio" value="2" asp-for="TipoFornecedor" />Pessoa Jurídica
                 <span asp-validation-for="TipoFornecedor" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -33,16 +34,15 @@
                     <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
                 </label>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Voltar</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

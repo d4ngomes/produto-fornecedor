@@ -36,10 +36,7 @@ namespace PF.App.Controllers
 
         public IActionResult Create()
         {
-            ViewData["TipoFornecedor"] = Enum.GetValues(typeof(TipoFornecedor))
-                .Cast<TipoFornecedor>()
-                .Select(v => v.ToString())
-                .ToList();
+            
             return View();
         }
 

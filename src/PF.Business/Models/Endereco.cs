@@ -19,7 +19,6 @@ namespace PF.Business.Models
         [StringLength(50)]
         public string Numero { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(250)]
         public string Complemento { get; set; }
 

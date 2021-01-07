@@ -21,8 +21,8 @@ namespace PF.Business.Models
         [StringLength(1000, MinimumLength = 1, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres.")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(100)]
+        [Display(Name = "Imagem do Produto")]
         public string Imagem { get; set; }
 
         [DataType(DataType.Currency)]
