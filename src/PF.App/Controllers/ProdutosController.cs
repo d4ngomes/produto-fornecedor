@@ -24,11 +24,13 @@ namespace PF.App.Controllers
             _fornecedorRepository = fornecedorRepository;
         }
 
+        [Route("lista-de-produtos")]
         public async Task<IActionResult> Index()
         {
             return View(await _produtoRepository.ObterProdutosFornecedores());
         }
 
+        [Route("dados-do-produto/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var produto = await _produtoRepository.ObterProdutoFornecedor(id);
@@ -40,12 +42,14 @@ namespace PF.App.Controllers
             return View(produto);
         }
 
+        [Route("novo-produto")]
         public async Task<IActionResult> Create()
         {
             ViewData["Fornecedores"] = new SelectList(await _fornecedorRepository.ObterTodos(), "Id", "Nome");
             return View();
         }
 
+        [Route("novo-produto")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Produto produto)
@@ -58,13 +62,14 @@ namespace PF.App.Controllers
 
             var imgPrefixo = Guid.NewGuid() + "_";
             var img = HttpContext.Request.Form.Files;
-            UplodadImagem(img, imgPrefixo, produto);
+            await UplodadImagem(img, imgPrefixo, produto);
 
             await _produtoRepository.Adicionar(produto);
             await _produtoRepository.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var produto = await _produtoRepository.ObterProdutoFornecedor(id);
@@ -76,6 +81,7 @@ namespace PF.App.Controllers
             return View(produto);
         }
 
+        [Route("editar-produto/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Produto produto)
@@ -106,6 +112,7 @@ namespace PF.App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var produto = await _produtoRepository.ObterProdutoFornecedor(id);
@@ -117,6 +124,7 @@ namespace PF.App.Controllers
             return View(produto);
         }
 
+        [Route("excluir-produto/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
