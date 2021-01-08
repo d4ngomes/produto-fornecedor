@@ -1,4 +1,5 @@
-﻿@model PF.Business.Models.Fornecedor
+﻿@using PF.Business.Models
+@model PF.Business.Models.Fornecedor
 
 @{
     ViewData["Title"] = "Editar";
@@ -25,8 +26,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="TipoFornecedor" class="control-label"></label><br />
-                <input type="radio" value="1" asp-for="TipoFornecedor" checked />Pessoa Física<br />
-                <input type="radio" value="2" asp-for="TipoFornecedor" />Pessoa Jurídica
+                <input type="radio" value="1" asp-for="TipoFornecedor" checked="@(Model.TipoFornecedor == TipoFornecedor.PessoaFisica)" />Pessoa Física<br />
+                <input type="radio" value="2" asp-for="TipoFornecedor" checked="@(Model.TipoFornecedor == TipoFornecedor.PessoaJuridica)" />Pessoa Jurídica
                 <span asp-validation-for="TipoFornecedor" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -37,12 +38,21 @@
 
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" />
-                <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+                <a class="btn btn-dark" asp-action="Index">Voltar</a>
             </div>
         </form>
     </div>
 </div>
-
+<div>
+    <hr />
+    <h5>Endereço</h5>
+    <partial name="_PartialEnderecoDetalhes" />
+</div>
+<div>
+    <hr />
+    <h5>Produtos</h5>
+    <partial name="_PartialProdutosLista" model="@Model.Produtos" />
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

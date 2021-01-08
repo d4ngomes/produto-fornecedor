@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label asp-for="TipoFornecedor" class="control-label"></label><br />
                 <input type="radio" value="1" asp-for="TipoFornecedor" checked />Pessoa Física<br />
-                <input type="radio" value="2" asp-for="TipoFornecedor"   />Pessoa Jurídica
+                <input type="radio" value="2" asp-for="TipoFornecedor" />Pessoa Jurídica
                 <span asp-validation-for="TipoFornecedor" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -34,11 +34,19 @@
 
             <h4>Endereço</h4>
             <hr />
-            <partial name="_Endereco" />
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-cep" style="display:none;">
+                <strong>Cep não encontrado!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <partial name="_PartialEndereco" />
 
             <div class="form-group">
                 <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+                <a class="btn btn-dark" asp-action="Index">Voltar</a>
             </div>
         </form>
     </div>
@@ -46,4 +54,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        BuscaCep();
+    </script>
 }

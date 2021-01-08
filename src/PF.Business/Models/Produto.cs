@@ -25,6 +25,7 @@ namespace PF.Business.Models
         [Display(Name = "Imagem do Produto")]
         public string Imagem { get; set; }
 
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
         public decimal Valor { get; set; }

@@ -1,0 +1,42 @@
+﻿@model PF.Business.Models.Fornecedor
+
+@{
+    ViewData["Title"] = "Atualizar Endereço";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>@Model.Nome</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-cep" style="display:none;">
+            <strong>Cep não encontrado!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form method="post" asp-action="AtualizaEndereco">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Endereco.Id" />
+
+            <partial name="_PartialEndereco" />
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a class="btn btn-dark" asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        BuscaCep();
+    </script>
+}

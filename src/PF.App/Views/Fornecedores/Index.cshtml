@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PF.Business.Models.Fornecedor>
+﻿@using PF.App.Extensions
+@model IEnumerable<PF.Business.Models.Fornecedor>
 
 @{
     ViewData["Title"] = "Lista de Fornecedores";
@@ -34,7 +35,7 @@
                         @Html.DisplayFor(modelItem => item.Nome)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Documento)
+                        @this.FormataDocumento(item.TipoFornecedor, item.Documento)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Ativo)

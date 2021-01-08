@@ -16,7 +16,9 @@ namespace PF.Data.Repository
 
         public async Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId)
         {
-            return await db.Enderecos.FirstOrDefaultAsync(e => e.FornecedorId == fornecedorId);
+            return await db.Enderecos
+                .Include(e => e.Fornecedor)
+                .FirstOrDefaultAsync(e => e.FornecedorId == fornecedorId);
         }
     }
 }

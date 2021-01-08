@@ -12,10 +12,12 @@ namespace PF.App.Controllers
     public class FornecedoresController : Controller
     {
         private readonly IFornecedorRepository _fornecedorRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
 
-        public FornecedoresController(IFornecedorRepository fornecedorRepository)
+        public FornecedoresController(IFornecedorRepository fornecedorRepository, IEnderecoRepository enderecoRepository)
         {
             _fornecedorRepository = fornecedorRepository;
+            _enderecoRepository = enderecoRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -25,7 +27,7 @@ namespace PF.App.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var fornecedor = await _fornecedorRepository.ObterPorId(id);
+            var fornecedor = await _fornecedorRepository.ObterFornecedorEndereco(id);
             if (fornecedor == null)
             {
                 return NotFound();
@@ -105,6 +107,36 @@ namespace PF.App.Controllers
             if (fornecedor == null) return NotFound();
             await _fornecedorRepository.Remover(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AtualizaEndereco(Guid id)
+        {
+            var fornecedor = await _fornecedorRepository.ObterFornecedorEndereco(id);
+            if (fornecedor == null)
+            {
+                return NotFound();
+            }
+            return View(fornecedor);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AtualizaEndereco(Guid id, Fornecedor fornecedor)
+        {
+            if (id != fornecedor.Id)
+            {
+                return NotFound();
+            }
+            var endereco = await _enderecoRepository.ObterPorId(fornecedor.Endereco.Id);
+            endereco.Cep = fornecedor.Endereco.Cep;
+            endereco.Logradouro = fornecedor.Endereco.Logradouro;
+            endereco.Numero = fornecedor.Endereco.Numero;
+            endereco.Complemento = fornecedor.Endereco.Complemento;
+            endereco.Bairro = fornecedor.Endereco.Bairro;
+            endereco.Cidade = fornecedor.Endereco.Cidade;
+            endereco.Estado = fornecedor.Endereco.Estado;
+            await _enderecoRepository.Atualizar(endereco);
+            return RedirectToAction(nameof(Details), new { id = endereco.FornecedorId });
         }
     }
 }
