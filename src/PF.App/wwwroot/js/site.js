@@ -40,10 +40,12 @@
                                 $("#Endereco_Bairro").val(dados.bairro);
                                 $("#Endereco_Cidade").val(dados.localidade);
                                 $("#Endereco_Estado").val(dados.uf);
+                                $('#alert-cep').hide();
                             } //end if.
                             else {
                                 //CEP pesquisado não foi encontrado.
                                 limpa_formulário_cep();
+                                document.getElementById("alert-cep-msg").innerHTML = "CEP não encontrado.";
                                 $('#alert-cep').show();
                                 //alert("CEP não encontrado.");
                             }
@@ -52,7 +54,9 @@
                 else {
                     //cep é inválido.
                     limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
+                    document.getElementById("alert-cep-msg").innerHTML = "Formato de CEP inválido.";
+                    $('#alert-cep').show();
+                    //alert("Formato de CEP inválido.");
                 }
             } //end if.
             else {
